@@ -1,8 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import router from './routes/user.js';
 import sequelize from './db.js';
 import cors from 'cors'
+
+import authRouter from './routes/user.js';
+import productsRouter from './routes/products.js';
+
 
 const PORT = process.env.PORT || 3000
 
@@ -13,8 +16,8 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
-
-app.use('/auth', router);
+app.use('/auth', authRouter);
+app.use('/products', productsRouter)
 
 app.get('/', (req, res) => {
   res.send('API funcionando');
