@@ -5,32 +5,37 @@ import jwt from 'jsonwebtoken';
 export const register = async (req, res) => {
   const { username, password } = req.body;
 
+  if (!username || !password) {
+    return res.status(400).json({ error: 'El username y el password son obligatorios' });
+  }
+
   try {
-    // Determinar el rol del nuevo usuario según quién esté logueado
-    let role = 'user'; // Por defecto, rol de cliente
+    let role = 'user'; // Rol predeterminado
 
-    if (req.user && req.user.role === 'admin') {
-      role = 'seller'; // Si es un admin quien registra, asignamos rol de vendedor
-    }
-
-    // Encriptamos la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Creamos el nuevo usuario
     const newUser = await User.create({
       username,
       password: hashedPassword,
       role,
     });
 
-    res.status(201).json({ message: 'Usuario registrado', userId: newUser.id, role: newUser.role });
+    res.status(201).json({
+      message: 'Usuario registrado',
+      userId: newUser.id,
+      role: newUser.role,
+    });
   } catch (error) {
-    res.status(500).json({ error: 'Error al registrar usuario' });
+    res.status(500).json({ error: error.message || 'Error al registrar usuario' });
   }
 };
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'El username y el password son obligatorios' });
+  }
 
   try {
     const user = await User.findOne({ where: { username } });
@@ -47,16 +52,18 @@ export const login = async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
   } catch (error) {
-    res.status(500).json({ error: 'Error al iniciar sesión' });
+    res.status(500).json({ error: error.message || 'Error al iniciar sesión' });
   }
 };
 
-export const profile =  (req, res) => {
-  if (req.user){
-    res.json({ 
-      message: 'Acceso permitido', 
+export const profile = (req, res) => {
+  if (req.user) {
+    res.json({
+      message: 'Acceso permitido',
       username: req.user.username,
-      role: req.user.role
+      role: req.user.role,
     });
+  } else {
+    res.status(401).json({ error: 'Acceso no autorizado' });
   }
 };
