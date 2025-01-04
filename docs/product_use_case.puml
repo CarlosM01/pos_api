@@ -1,0 +1,18 @@
+@startuml use cases
+
+actor Admin
+
+package "Product Management" {
+  usecase "Create Product" as UC_CreateProduct
+  usecase "View All Products" as UC_ViewProducts
+  usecase "View Product by ID" as UC_ViewProductById
+  usecase "Update Product" as UC_UpdateProduct
+  usecase "Delete Product" as UC_DeleteProduct
+}
+
+Admin -- UC_CreateProduct
+Admin -- UC_ViewProducts
+Admin -- UC_ViewProductById
+Admin -- UC_UpdateProduct
+Admin -- UC_DeleteProduct
+@enduml

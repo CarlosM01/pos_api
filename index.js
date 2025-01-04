@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import sequelize from './db.js';
 import cors from 'cors'
 
-import authRouter from './routes/user.js';
+import userRouter from './routes/user.js';
 import productsRouter from './routes/products.js';
 
 
@@ -16,7 +16,7 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
-app.use('/auth', authRouter);
+app.use('/user', userRouter);
 app.use('/products', productsRouter)
 
 app.get('/', (req, res) => {
@@ -26,14 +26,14 @@ app.get('/', (req, res) => {
 
 (async () => {
   try {
-    await sequelize.authenticate();  // Verificar la conexión
-    console.log('Conexión a la base de datos establecida');
+    await sequelize.authenticate();  // Verifiy connection with Sequelize 
+    console.log('Database connection established');
 
-    await sequelize.sync({ alter: true });  // Sincronizar tablas
-    console.log('Modelos sincronizados con la base de datos');
+    await sequelize.sync({ alter: true });  // Synchronize tables
+    console.log('Models synchronized with the database');
 
-    app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
   } catch (error) {
-    console.error('Error al iniciar la aplicación:', error);
+    console.error('Error starting the application:', error);
   }
 })();

@@ -1,0 +1,37 @@
+@startuml routes
+class Product {
+  + id: INTEGER
+  + name: STRING
+  + price: FLOAT
+  + quantity: INTEGER
+  + description: TEXT
+  --
+  + createProduct()
+  + getAllProducts()
+  + getProductById(id: INTEGER)
+  + updateProduct(id: INTEGER)
+  + deleteProduct(id: INTEGER)
+}
+
+class User {
+  + id: INTEGER
+  + username: STRING
+  + email: STRING
+  + role: STRING
+  + password: STRING
+  --
+  + register()
+  + login()
+  + profile()
+  + updateProfile()
+  + deleteUser()
+}
+
+class AuthMiddleware {
+  + authenticateToken()
+}
+
+Product "1" <-- "*" User : "created by"
+
+AuthMiddleware --> User : "applies to"
+@enduml

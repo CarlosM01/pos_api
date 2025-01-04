@@ -1,0 +1,32 @@
+@startuml index_flowchart
+start
+
+:Load environment variables with dotenv;
+:Import dependencies (express, sequelize, cors, etc.);
+:Create Express app;
+
+:Configure CORS and JSON middleware;
+
+:Add '/user' routes (userRouter);
+:Add '/products' routes (productsRouter);
+
+:Define root route ('/');
+
+:Connect to the database;
+if (Database connection successful?) then (Yes)
+  :Log 'Database connection established';
+
+  :Sync Sequelize models with the database;
+  if (Sync successful?) then (Yes)
+    :Log 'Models synchronized with the database';
+    :Start the server on PORT (default 8080);
+    :Log 'Server running on http://localhost:${PORT}';
+  else (No)
+    :Log 'Error during model synchronization';
+  endif
+else (No)
+  :Log 'Error starting the application';
+endif
+
+stop
+@enduml

@@ -1,0 +1,18 @@
+@startuml use cases
+actor User
+
+package "Authentication" {
+  usecase "Register" as UC_Register
+  usecase "Login" as UC_Login
+  usecase "View Profile" as UC_ViewProfile
+  usecase "Update Profile" as UC_UpdateProfile
+  usecase "Delete Profile" as UC_DeleteProfile
+}
+
+User --> UC_Register
+User --> UC_Login
+User --> UC_ViewProfile
+User --> UC_UpdateProfile
+User --> UC_DeleteProfile
+
+@enduml

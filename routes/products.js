@@ -10,10 +10,10 @@ import {
 
 const prductsRouter = express.Router();
 
-prductsRouter.post('/', createProduct);        // Crear producto
-prductsRouter.get('/', getAllProducts);        // Listar todos los productos
-prductsRouter.get('/:id', getProductById);    // Obtener producto por ID
-prductsRouter.put('/:id', updateProduct);     // Actualizar producto
-prductsRouter.delete('/:id', deleteProduct);  // Eliminar producto
+prductsRouter.post('/', createProduct);       
+prductsRouter.get('/', getAllProducts);       
+prductsRouter.get('/:id', getProductById);    
+prductsRouter.put('/:id', updateProduct);     
+prductsRouter.delete('/:id', deleteProduct);  
 
 export default prductsRouter;

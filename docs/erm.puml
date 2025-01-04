@@ -1,0 +1,26 @@
+@startuml ERM
+entity Product {
+  + id: INTEGER [PK]
+  --
+  + name: STRING
+  + price: FLOAT
+  + quantity: INTEGER
+  + description: TEXT
+  --
+  + createdAt: DATETIME
+  + updatedAt: DATETIME
+}
+
+
+entity User {
+  + id: INTEGER [PK]
+  --
+  + username: STRING
+  + email: STRING
+  + role: STRING
+  + password: STRING
+  --
+  + createdAt: DATETIME
+  + updatedAt: DATETIME
+}
+@enduml
