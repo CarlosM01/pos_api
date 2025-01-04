@@ -1,68 +1,68 @@
 // controllers/inventoryController.js
 import Product from '../models/product.js';
 
-// Crear un producto
+// Create a product
 export const createProduct = async (req, res) => {
   try {
     const { name, price, quantity, description } = req.body;
     const product = await Product.create({ name, price, quantity, description });
-    res.status(201).json({ message: 'Producto creado', product });
+    res.status(201).json({ message: 'Product created', product });
   } catch (error) {
-    res.status(500).json({ error: 'Error al crear producto' });
+    res.status(500).json({ error: 'Error creating product' });
   }
 };
 
-// Obtener todos los productos
+// Get all products
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll();
     res.json(products);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener productos' });
+    res.status(500).json({ error: 'Error getting products' });
   }
 };
 
-// Obtener un producto por ID
+// Get a product by ID
 export const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findByPk(id);
 
-    if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!product) return res.status(404).json({ error: 'Product not found' });
 
     res.json(product);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener producto' });
+    res.status(500).json({ error: 'Error getting product' });
   }
 };
 
-// Actualizar un producto
+// Update a product
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, price, quantity, description } = req.body;
     const product = await Product.findByPk(id);
 
-    if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!product) return res.status(404).json({ error: 'Product not found' });
 
     await product.update({ name, price, quantity, description });
-    res.json({ message: 'Producto actualizado', product });
+    res.json({ message: 'Product updated', product });
   } catch (error) {
-    res.status(500).json({ error: 'Error al actualizar producto' });
+    res.status(500).json({ error: 'Error updating product' });
   }
 };
 
-// Eliminar un producto
+// Delete a product
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findByPk(id);
 
-    if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!product) return res.status(404).json({ error: 'Product not found' });
 
     await product.destroy();
-    res.json({ message: 'Producto eliminado' });
+    res.json({ message: 'Producto deleted' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar producto' });
+    res.status(500).json({ error: 'Error deleting product' });
   }
 };

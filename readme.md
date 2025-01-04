@@ -1,7 +1,7 @@
 
 # Point Of Sell API
 
-## Table of Contents
+### Table of Contents
 
 1. [Project Description](#project-description)
 2. [Key Features](#key-features)
@@ -21,6 +21,7 @@
 8. [References](#references)
 
 
+---
 ### Project Description: **Inventory and Authentication System**
 
 This project is a web-based application that serves as an inventory and user management system. It includes features for managing products in an inventory (create, view, update, delete) and user authentication (registration, login, profile management). The system allows different user roles to interact with the application, including general users and administrators.

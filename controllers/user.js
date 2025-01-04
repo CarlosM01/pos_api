@@ -6,11 +6,11 @@ export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    return res.status(400).json({ error: 'El username, email y password son obligatorios' });
+    return res.status(400).json({ error: 'Username, email, and password are required' });
   }
 
   try {
-    let role = 'user'; // Rol predeterminado
+    let role = 'user'; // Default role
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -22,13 +22,13 @@ export const register = async (req, res) => {
     });
 
     res.status(201).json({
-      message: 'Usuario registrado',
+      message: 'User registered',
       userId: newUser.id,
       email: newUser.email,
       role: newUser.role,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message || 'Error al registrar usuario' });
+    res.status(500).json({ error: error.message || 'Error registering user' });
   }
 };
 
@@ -36,13 +36,13 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'El username y el password son obligatorios' });
+    return res.status(400).json({ error: 'Username and password are required' });
   }
 
   try {
     const user = await User.findOne({ where: { username } });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ error: 'Credenciales inválidas' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const payload = {
@@ -55,69 +55,69 @@ export const login = async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
   } catch (error) {
-    res.status(500).json({ error: error.message || 'Error al iniciar sesión' });
+    res.status(500).json({ error: error.message || 'Error logging in' });
   }
 };
 
 export const profile = (req, res) => {
   if (req.user) {
     res.json({
-      message: 'Acceso permitido',
+      message: 'Access granted',
       username: req.user.username,
       email: req.user.email,
       role: req.user.role,
     });
   } else {
-    res.status(401).json({ error: 'Acceso no autorizado' });
+    res.status(401).json({ error: 'Unauthorized access' });
   }
 };
 
-// Método PUT para actualizar el perfil de usuario
+// PUT method to update user profile
 export const updateProfile = async (req, res) => {
   const { username, email, password } = req.body;
   const userId = req.user.id;
 
   try {
-    // Verificar si el usuario existe
+    // Check if the user exists
     const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
+      return res.status(404).json({ error: 'User not found' });
     }
 
-    // Actualizar los campos si se proporcionan
+    // Update the fields if provided
     if (username) user.username = username;
     if (email) user.email = email;
-    if (password) user.password = await bcrypt.hash(password, 10); // Encriptar nueva contraseña
+    if (password) user.password = await bcrypt.hash(password, 10); // Encrypt new password
 
     await user.save();
 
     res.json({
-      message: 'Perfil actualizado',
+      message: 'Profile updated',
       userId: user.id,
       username: user.username,
       email: user.email,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message || 'Error al actualizar el perfil' });
+    res.status(500).json({ error: error.message || 'Error updating profile' });
   }
 };
 
-// Método DELETE para eliminar un usuario
+// DELETE method to remove a user
 export const deleteUser = async (req, res) => {
   const userId = req.user.id;
 
   try {
-    // Verificar si el usuario existe
+    // Check if the user exists
     const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
+      return res.status(404).json({ error: 'User not found' });
     }
 
-    // Eliminar al usuario
+    // Delete the user
     await user.destroy();
 
-    res.json({ message: 'Usuario eliminado correctamente' });
+    res.json({ message: 'User deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message || 'Error al eliminar el usuario' });
+    res.status(500).json({ error: error.message || 'Error deleting user' });
   }
 };
