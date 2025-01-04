@@ -15,9 +15,7 @@
 6. [Example Database](#example-database)
    - [Product Table](#product-table)
    - [User Table](#user-table)
-7. [Routes](#routes)
-   - [User Routes](#user-routes)
-   - [Product Routes](#product-routes)
+7. [Api Endpoints](#api-endpoints)
 8. [References](#references)
 
 
@@ -80,25 +78,22 @@ This project is a web-based application that serves as an inventory and user man
 
 ---
 
-### Routes
-#### User
-| Route            | Function         |
-|-------------------|------------------|
-| POST /register    | register         |
-| POST /login       | login            |
-| GET /profile      | profile          |
-| PUT /profile      | updateProfile    |
-| DELETE /profile   | deleteUser       | 
-#### Product
-| Route       | Function         |
-|-------------|------------------|
-| POST /      | createProduct    |
-| GET /       | getAllProducts   |
-| GET /:id    | getProductById   |
-| PUT /:id    | updateProduct    |
-| DELETE /:id | deleteProduct    | 
 
-
+### Api Endpoints
+#### Products
+| **Method**  | **Route**         | **Description**                | **Function**          | **Authentication** |
+|-------------|-------------------|--------------------------------|-----------------------|-------------------|
+| GET         | `/` | Test api running |  | No |
+| POST        | `/products/`               | Create a new product           | createProduct         | Yes               |
+| GET         | `/products/`               | Get all products               | getAllProducts        | No                |
+| GET         | `/products/:id`            | Get a product by ID            | getProductById        | No                |
+| PUT         | `/products/:id`            | Update a product by ID         | updateProduct         | Yes               |
+| DELETE      | `/products/:id`            | Delete a product by ID         | deleteProduct         | Yes               |
+| POST        | `/user/register`       | Register a new user            | register              | Yes               |
+| POST        | `/user/login`          | Log in                         | login                 | No                |
+| GET         | `/user/profile`        | Get the user's profile         | profile               | Yes               |
+| PUT         | `/user/profile`        | Update the user's profile      | updateProfile         | Yes               |
+| DELETE      | `/user/profile`        | Delete the user's profile      | deleteUser            | Yes               |
 ---
 
 ### References
