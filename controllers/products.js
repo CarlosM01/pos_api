@@ -1,14 +1,21 @@
+// Recordatorio:  eSTABA IMPLEMENTANDO EL MIDDLENWARE de autenticacion en lsa funciones de l controlador
+// Detalles de endpoints en documentacion
+
 // controllers/inventoryController.js
 import Product from '../models/product.js';
 
 // Create a product
 export const createProduct = async (req, res) => {
-  try {
-    const { name, price, quantity, description } = req.body;
-    const product = await Product.create({ name, price, quantity, description });
-    res.status(201).json({ message: 'Product created', product });
-  } catch (error) {
-    res.status(500).json({ error: 'Error creating product' });
+  if (req.user && req.user.role == 'admin') {
+    try {
+      const { name, price, quantity, description } = req.body;
+      const product = await Product.create({ name, price, quantity, description });
+      res.status(201).json({ message: 'Product created', product });
+    } catch (error) {
+      res.status(500).json({ error: 'Error creating product' });
+    }
+  } else {
+    res.status(401).json({ error: 'Unauthorized access' });
   }
 };
 

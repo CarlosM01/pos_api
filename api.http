@@ -1,0 +1,23 @@
+POST http://localhost:8080/user/register
+content-type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+###
+
+POST http://localhost:8080/user/login
+content-type: application/json
+
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+###
+
+GET http://localhost:8080/user/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTczNjA0NjkyMSwiZXhwIjoxNzM2MDUwNTIxfQ.j-L-sd_FBgVh6Z8uaL7g22Z6f7XQFpQ-EN-T6pgd-8s
