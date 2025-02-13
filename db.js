@@ -4,10 +4,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-  host: process.env.DB_HOST,
-  dialect: process.env.DBMS,
-  port: process.env.DB_PORT
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './database.sqlite', // This will create a database file in your project root
+  // You can customize the path as needed
 });
 
 // Function to test the database connection
